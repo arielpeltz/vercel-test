@@ -10,7 +10,6 @@ load_dotenv('.env.local')
 app = Flask(__name__)
 
 redis1 = redis.Redis.from_url(os.getenv('REDIS_connection_string'))
-redis2 = redis.Redis.from_url(os.getenv('redis2_connection_string'))
 
 
 def val(client, key):
@@ -30,9 +29,8 @@ def index():
     print(val(redis1, 'mykey'))
 
     # Render the value in the template
-    return render_template_string('<h1>{{ value1 }} <br> {{ value2 }}</h1>',
-                                  value1=val(redis1, 'mykey'),
-                                  value2=val(redis2, 'mykey'))
+    return render_template_string('<h1>{{ value1 }}</h1>',
+                                  value1=val(redis1, 'headline'))
 
 
 if __name__ == "__main__":
