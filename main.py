@@ -9,7 +9,7 @@ load_dotenv('.env.local')
 # Initialize Flask application
 app = Flask(__name__)
 
-redis1 = redis.Redis.from_url(os.getenv('REDIS_connection_string'))
+redis1 = redis.Redis.from_url(os.getenv('connection_string'))
 
 
 def val(client, key):
@@ -26,8 +26,6 @@ def val(client, key):
 
 @app.route('/')
 def index():
-    print(val(redis1, 'mykey'))
-
     # Render the value in the template
     return render_template_string('<h1>{{ value1 }}</h1>',
                                   value1=val(redis1, 'headline'))
